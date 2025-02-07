@@ -1,0 +1,4 @@
+site_name: CuraSync Backend API Doc
+
+theme:
+  name: readthedocs
