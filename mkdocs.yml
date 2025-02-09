@@ -1,4 +1,29 @@
 site_name: CuraSync Backend API Doc
 
 theme:
-  name: readthedocs
+  name: material
+  logo: logo.png
+  favicon: logo.png
+  features:
+    - content.code.copy
+    - navigation.sections
+  palette:
+    scheme: default # Light theme
+    primary: indigo # Change this to indigo, cyan, etc.
+    accent: blue # Highlight color
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/CuraSync
+      name: Github
+copyright: Copyright &copy; 2025 CuraSync
