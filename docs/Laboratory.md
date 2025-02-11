@@ -3,28 +3,28 @@
 #### **Endpoint:**
 
 ```
-POST /pharmacy/register
+POST /laboratory/register
 ```
 
 #### **Request Body:**
 
 ```json
 {
-  "pharmacyId": "PHARM-2025001",
-  "pharmacyName": "City Health Pharmacy",
+  "labId": "LAB-2025001",
+  "labName": "Advanced Diagnostic Center",
   "location": {
-    "street": "789 Oak Street",
-    "city": "New York",
-    "state": "NY",
-    "zipCode": "10001",
+    "street": "456 Maple Avenue",
+    "city": "Los Angeles",
+    "state": "CA",
+    "zipCode": "90001",
     "country": "USA"
   },
-  "email": "info@cityhealthpharmacy.com",
-  "password": "SecurePharmPass123!",
-  "contactNo": "+1-555-4321-789",
-  "GovRegId": "GOV-123456789",
-  "description": "A licensed pharmacy providing prescription medications and healthcare products.",
-  "profilePic": "https://example.com/uploads/pharmacy-profile.jpg",
+  "email": "contact@advanceddiagnostics.com",
+  "password": "SecureLabPass123!",
+  "contactNo": "+1-555-6789-123",
+  "GovRegId": "GOV-987654321",
+  "description": "A state-of-the-art diagnostic laboratory offering comprehensive medical testing services.",
+  "profilePic": "https://example.com/uploads/lab-profile.jpg",
   "socialMediaLinks": {
     "linkedin": "https://www.linkedin.com/in/####",
     "twitter": "https://twitter.com/####"
@@ -35,12 +35,12 @@ POST /pharmacy/register
 #### **Response:**
 
 - **Success (200):**
-    - When register is successful and return the Pharmacy Id:
+    - When register is successful and return the Laboratory Id:
 
 ```json
 {
     "message": "Successfully Registered",
-    "id": "Ph12345"
+    "id": "L12345"
 }
 ```
 
@@ -95,12 +95,12 @@ POST /pharmacy/register
 ```
 <br/>
 
-## **Get data that required in the pharmacy's home page**
+## **Get data that required in the laboratory's home page**
 
 #### **Endpoint:**
 
 ```
-GET /pharmacy/home
+GET /laboratory/home
 ```
 
 #### **Headers:**
@@ -118,20 +118,20 @@ GET /pharmacy/home
 
 ```json
 {
-  "pharmacyId": "PHARM-2025001",
-  "pharmacyName": "City Health Pharmacy",
+  "labId": "LAB-2025001",
+  "labName": "Advanced Diagnostic Center",
   "location": {
-    "street": "789 Oak Street",
-    "city": "New York",
-    "state": "NY",
-    "zipCode": "10001",
+    "street": "456 Maple Avenue",
+    "city": "Los Angeles",
+    "state": "CA",
+    "zipCode": "90001",
     "country": "USA"
   },
-  "email": "info@cityhealthpharmacy.com",
-  "contactNo": "+1-555-4321-789",
-  "GovRegId": "GOV-123456789",
-  "description": "A licensed pharmacy providing prescription medications and healthcare products.",
-  "profilePic": "https://example.com/uploads/pharmacy-profile.jpg",
+  "email": "contact@advanceddiagnostics.com",
+  "contactNo": "+1-555-6789-123",
+  "GovRegId": "GOV-987654321",
+  "description": "A state-of-the-art diagnostic laboratory offering comprehensive medical testing services.",
+  "profilePic": "https://example.com/uploads/lab-profile.jpg",
   "socialMediaLinks": {
     "linkedin": "https://www.linkedin.com/in/####",
     "twitter": "https://twitter.com/####"
@@ -177,7 +177,7 @@ GET /pharmacy/home
 #### **Endpoint:**
 
 ```
-GET /pharmacy/patients
+GET /laboratory/patients
 ```
 
 #### **Headers:**

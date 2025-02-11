@@ -21,6 +21,6 @@ The CuraSync API is organized into different categories based on user roles. Eac
 
   - [Patient](Patient.md)  – Provides endpoints for patients to access their medical history, view prescriptions, receive lab reports, and manage their profile.
 
-  - [Laboratory](Lab.md)  – Includes endpoints for laboratories to upload test reports, associate them with patient records, and send notifications upon completion.
+  - [Laboratory](Laboratory.md)  – Includes endpoints for laboratories to upload test reports, associate them with patient records, and send notifications upon completion.
 
   - [Pharmacy](Pharmacy.md)  – Features endpoints that allow pharmacies to verify prescriptions, process medication requests, and check availability of medicines.
