@@ -1,250 +1,164 @@
-## **Register**
+### **1. Pharmacy Registration**
 
-#### **Endpoint:**
+- **Endpoint**: `POST /pharmacy/register`
+- **Description**: Registers a new pharmacy.
+- **Request Body**:
+    
+    ```json
+    {
+      "pharmacyName": "HealthPlus Pharmacy",
+      "email": "contactus@healthpluspharmacy.com",
+      "licenceNumber": "74247",
+      "password": "12345",
+      "phoneNumber": "+1234567890",
+      "location": "456 Elm St, Anytown, USA"
+    }
+    
+    ```
+    
+- **Success Response (201 Created)**:
+    
+    ```json
+    {
+      "message": "Pharmacy created successfully",
+      "pharmacyId": "PH1234"
+    }
+    
+    ```
+    
+- **Errors**:
+    - `400 Bad Request`: Missing required fields.
+    - `409 Conflict`: Licence Number or Email already exists.
+    - `500 Internal Server Error`: Unexpected error.
 
-```
-POST /pharmacy/register
-```
+---
 
-#### **Request Body:**
+### **2. Update Pharmacy Profile**
 
-```json
-{
-  "pharmacyId": "PHARM-2025001",
-  "pharmacyName": "City Health Pharmacy",
-  "location": {
-    "street": "789 Oak Street",
-    "city": "New York",
-    "state": "NY",
-    "zipCode": "10001",
-    "country": "USA"
-  },
-  "email": "info@cityhealthpharmacy.com",
-  "password": "SecurePharmPass123!",
-  "contactNo": "+1-555-4321-789",
-  "GovRegId": "GOV-123456789",
-  "description": "A licensed pharmacy providing prescription medications and healthcare products.",
-  "profilePic": "https://example.com/uploads/pharmacy-profile.jpg",
-  "socialMediaLinks": {
-    "linkedin": "https://www.linkedin.com/in/####",
-    "twitter": "https://twitter.com/####"
-  },
-}
-```
+- **Endpoint**: `POST /pharmacy/profile`
+- **Headers**: `Authorization: Bearer <JWT>`
+- **Description**: Updates the pharmacy’s profile (excludes `pharmacyId`, `email`, `licenceNumber`, and `password`).
+- **Request Body (Example)**:
+    
+    ```json
+    {
+      "location": "456 Elm St, Anytown, USA",
+      "description": "A reliable pharmacy providing a wide range of medications and health products.",
+      "operatingHours": "9 AM - 9 PM",
+      "rating": 4.5,
+      "profilePic": "pharmacyprofilepic.jpg",
+      "contactInformation": ["+1234567890", "contact@healthpluspharmacy.com"]
+    }
+    
+    ```
+    
+- **Success Response (200 OK)**:
+    
+    ```json
+    { "message": "Pharmacy updated successfully" }
+    
+    ```
+    
+- **Errors**:
+    - `401 Unauthorized`: Invalid/missing token.
+    - `500 Internal Server Error`: Server error.
 
-#### **Response:**
+---
 
-- **Success (200):**
-    - When register is successful and return the Pharmacy Id:
+### **3. Get Pharmacy Profile**
 
-```json
-{
-    "message": "Successfully Registered",
-    "id": "Ph12345"
-}
-```
+- **Endpoint**: `GET /pharmacy/profile`
+- **Headers**: `Authorization: Bearer <JWT>`
+- **Description**: Retrieves the pharmacy’s profile (excludes sensitive fields like `password`).
+- **Success Response (200 OK)**:
+    
+    ```json
+    {
+        "pharmacyId": "PH64247",
+        "pharmacyName": "HealthPlus Pharmacy",
+        "email": "contactus@healthpluspharmacy.com",
+        "licenceNumber": "74247",
+        "phoneNumber": "+1234567890",
+        "location": "456 Elm St, Anytown, USA",
+        "description": "A reliable pharmacy provvviddinng a wide range of medications and health products.",
+        "operatingHours": "10 AM - 10 PM",
+        "rating": 4.5,
+        "profilePic": "pharmacyprofilepic.jpg",
+        "contactInformation": [
+            "+1234567890",
+            "contact@healthpluspharmacy.com"
+        ],
+        "createdAt": "2025-02-19T09:12:00.470Z",
+        "updatedAt": "2025-02-19T09:13:01.674Z",
+        "__v": 0
+    }
+    
+    ```
+    
+- **Errors**:
+    - `401 Unauthorized`: Invalid/missing token.
+    - `404 Not Found`: Pharmacy not found.
 
-- **Missing Required Fields (400):**
-    - If the required field is missing:
-    - Status Code: `400 Bad Request`
+---
 
-```json
-  {
-    "message": "The <field> field is required."
-  }
-```
+### **4. Get Pharmacy Homepage Data**
 
-- **Fields Invalid Format (400):**
-    - If the required field is invalid:
-    - Status Code: `400 Bad Request`
+- **Endpoint**: `GET /pharmacy/home`
+- **Headers**: `Authorization: Bearer <JWT>`
+- **Description**: Retrieves the pharmacy’s homepage data (same as profile in current implementation).
+- **Success Response (200 OK)**:
+    
+    ```json
+    {
+        "pharmacyId": "PH64247",
+        "pharmacyName": "HealthPlus Pharmacy",
+        "email": "contactus@healthpluspharmacy.com",
+        "licenceNumber": "74247",
+        "phoneNumber": "+1234567890",
+        "location": "456 Elm St, Anytown, USA",
+        "description": "A reliable pharmacy provvviddinng a wide range of medications and health products.",
+        "operatingHours": "10 AM - 10 PM",
+        "rating": 4.5,
+        "profilePic": "pharmacyprofilepic.jpg",
+        "contactInformation": [
+            "+1234567890",
+            "contact@healthpluspharmacy.com"
+        ],
+        "createdAt": "2025-02-19T09:12:00.470Z",
+        "updatedAt": "2025-02-19T09:13:01.674Z",
+        "__v": 0
+    }
+    ```
+    
+- **Errors**:
+    - `401 Unauthorized`: Invalid/missing token.
+    - `404 Not Found`: Pharmacy not found.
 
-```json
-  {
-    "message": "Invalid <field>. Please provide valid <field>."
-  }
-```
+---
 
-- **Duplicate Field (409):**
-    - If the unique fields like nicNo, govRegNo, email is already in the database:
-    - Status Code: `409 Conflict`
+### **5. Get Patient List**
 
-```json
-  {
-    "message": "The <field> is already in use."
-  }
-```
-
-- **Data Type Mismatch (422):**
-    - If the dataType send was incorrect:
-    - Status Code: `422 Unprocessable Entity`
-
-```json
-  {
-    "message": "The <field> field must be <dataType>."
-  }
-```
-
-- **Internal Server Error (500):**
-    - If there’s an unexpected error on the server:
-    - Status Code: `500 Internal Server Error`
-
-```json
-  {
-    "message": "Internal server error"
-  }
-```
-<br/>
-
-## **Get data that required in the pharmacy's home page**
-
-#### **Endpoint:**
-
-```
-GET /pharmacy/home
-```
-
-#### **Headers:**
-
-```json
-{
-  "Authorization": "Bearer <your_jwt_token>"
-}
-```
-
-#### **Response:**
-
-- **Success (200):**
-    - Successfully returned data:
-
-```json
-{
-  "pharmacyId": "PHARM-2025001",
-  "pharmacyName": "City Health Pharmacy",
-  "location": {
-    "street": "789 Oak Street",
-    "city": "New York",
-    "state": "NY",
-    "zipCode": "10001",
-    "country": "USA"
-  },
-  "email": "info@cityhealthpharmacy.com",
-  "contactNo": "+1-555-4321-789",
-  "GovRegId": "GOV-123456789",
-  "description": "A licensed pharmacy providing prescription medications and healthcare products.",
-  "profilePic": "https://example.com/uploads/pharmacy-profile.jpg",
-  "socialMediaLinks": {
-    "linkedin": "https://www.linkedin.com/in/####",
-    "twitter": "https://twitter.com/####"
-  },
-  "patientsCount": 20
-}
-```
-
-- **User not found (404):**
-    - If user not found in the database:
-    - Status Code: `404 Not Found`
-
-```json
-  {
-    "message": "User not found"
-  }
-```
-
-- **Invalid Credentials (401):**
-    - If the provided JWT token invalid:
-    - Status Code: `401 Unauthorized`
-
-```json
-  {
-    "message": "Invalid token"
-  }
-```
-
-- **Internal Server Error (500):**
-    - If there’s an unexpected error on the server:
-    - Status Code: `500 Internal Server Error`
-
-```json
-  {
-    "message": "Internal server error"
-  }
-```
-
-<br/>
-
-## **Get patient's list to the frontend patient’s list page**
-
-#### **Endpoint:**
-
-```
-GET /pharmacy/patients
-```
-
-#### **Headers:**
-
-```json
-{
-  "Authorization": "Bearer <your_jwt_token>"
-}
-```
-
-#### **Response:**
-
-- **Success (200):**
-    - Successfully returned patients list:
-
-```json
-[
-  {
-    "patientId": "Pa2045",
-    "lastMessage": "2025/02/10"
-  },
-  {
-    "patientId": "Pa2046",
-    "lastMessage": "2025/01/15"
-  },
-  {
-    "patientId": "Pa2047",
-    "lastMessage": "2025/02/05"
-  },
-  {
-    "patientId": "Pa2048",
-    "lastMessage": "2025/01/20"
-  },
-  {
-    "patientId": "Pa2049",
-    "lastMessage": "2025/02/01"
-  }
-]
-
-```
-
-- **User not found (404):**
-    - If user not found in the database:
-    - Status Code: `404 Not Found`
-
-```json
-  {
-    "message": "User not found"
-  }
-```
-
-- **Invalid Credentials (401):**
-    - If the provided JWT token invalid:
-    - Status Code: `401 Unauthorized`
-
-```json
-  {
-    "message": "Invalid token"
-  }
-```
-
-- **Internal Server Error (500):**
-    - If there’s an unexpected error on the server:
-    - Status Code: `500 Internal Server Error`
-
-```json
-  {
-    "message": "Internal server error"
-  }
-```
+- **Endpoint**: `GET /pharmacy/patients`
+- **Headers**: `Authorization: Bearer <JWT>`
+- **Description**: Retrieves patients associated with the pharmacy.
+- **Success Response (200 OK)**:
+    
+    ```json
+    [
+        {
+            "patientId": "PA40157",
+            "firstName": "John",
+            "lastName": "Doe",
+            "profilePic": "profilepic.jpg"
+        },
+        {
+            "patientId": "PA40157",
+            "firstName": "John",
+            "lastName": "Doe",
+            "profilePic": "profilepic.jpg"
+        }
+    ]
+    ```
+    
+- `401 Unauthorized`: Invalid/missing token.
+- `404 Not Found`: No patients found.
